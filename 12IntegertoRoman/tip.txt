@@ -1,0 +1,18 @@
+整数转罗马数字规则:
+    I V X L C D M  分别表示    1  5  10  50  100 500 1000
+
+可以表示 1到3999，  对于  X C  M  只差一是可以进位 在左侧表示一
+                          V L  D  也可以
+
+
+先从高位开始算起，对于 1  3   5  号位，如果前一位大于4 那么这一位进一。  如果超过2 ，在进位 ，编程注意进位
+
+
+也可以直接用写好的规则去映射
+public static String intToRoman(int num) {
+    String M[] = {"", "M", "MM", "MMM"};
+    String C[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+    String X[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+    String I[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+    return M[num/1000] + C[(num%1000)/100] + X[(num%100)/10] + I[num%10];
+}
