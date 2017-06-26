@@ -1,0 +1,5 @@
+检查特殊情况，比如为空
+
+append (size_t n, char c);
+
+string 也可以直接加 char类型
