@@ -1,0 +1,47 @@
+自己代码的优化  
+        if(lists.empty()){
+        	return nullptr;
+        }
+        while(lists.size() > 1){
+            lists.push_back(mergeTwoLists(lists[0], lists[1]));
+            lists.erase(lists.begin());
+            lists.erase(lists.begin());
+        }
+        return lists.front();
+
+通过以上代码的优化，可以将20提升到30左右
+
+
+也可以使用  堆操作 提升性能
+
+class Solution {
+    public:
+        static bool heapComp(ListNode* a, ListNode* b) {
+            return a->val > b->val;
+        }
+        ListNode* mergeKLists(vector<ListNode*>& lists) { //make_heap
+            ListNode head(0);
+            ListNode *curNode = &head;
+            vector<ListNode*> v;   
+            for(int i =0; i<lists.size(); i++){
+                if(lists[i]) v.push_back(lists[i]);
+            }
+            make_heap(v.begin(), v.end(), heapComp); //vector -> heap data strcture
+
+            while(v.size()>0){
+                curNode->next=v.front();
+                pop_heap(v.begin(), v.end(), heapComp); 
+                v.pop_back(); 
+                curNode = curNode->next;
+                if(curNode->next) {
+                    v.push_back(curNode->next); 
+                    push_heap(v.begin(), v.end(), heapComp);
+                }
+            }
+            return head.next;
+        }
+};
+
+重点理解 pop_head pop_back  push_head make_heap 函数的定义和生命
+
+程序性能需要提升

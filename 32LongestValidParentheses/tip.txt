@@ -1,0 +1,38 @@
+这道题需要以后重新做
+
+dynamic programing 动态规划问题
+
+字符串匹配最后的解决思路是一个数组保存该字符结束的最优的解
+
+和矩阵乘法不一样的数该问题存在一个中断，就是很有可能存在不匹配的字符串，因此不需要保存一个二维的数组
+
+自己错误的二维方法，忽视了合并时可能并不是vaild的问题，导致错误
+int longestValidParentheses(string s) {
+		if (s == "") return 0;
+		int n = s.size();
+		vector<vector<int>> m(n, vector<int>(n, 0));
+		for (int l = 1; l<n; l++) {
+			for (int i = 0; i<n - l; i++) {
+				int j = i + l;
+				for (int k = i + 1; k<j; k++) {
+					if (m[i][k] + m[k + 1][j]>m[i][j]) {
+						m[i][j] = m[i][k] + m[k + 1][j];
+					}
+					if (m[i][k]>m[i][j]) {
+						m[i][j] = m[i][k] ;
+					}
+					if (m[k + 1][j]>m[i][j]) {
+						m[i][j] = m[k + 1][j];
+					}
+				}
+
+				if (m[i + 1][j - 1] == l - 2 && s[i] == '('&&s[j] == ')') {
+					m[i][j] = m[i + 1][j - 1] + 2;
+				}
+				else if (m[i + 1][j - 1] > m[i][j]) {
+					m[i][j] = m[i + 1][j - 1];
+				}
+			}
+		}
+		return m[0][n - 1];
+	}
