@@ -1,0 +1,13 @@
+这道题最核心的就是每次判断该数字的范围：nums[0] > nums[mid]  和  nums[0] <= nums[mid]   两种情况进行判断
+ nums[0] <= nums[mid]   表示是递增数列，只要属于该范围的就可以  处理 nums[0] 和 nums[mid]  之间才会前半段
+
+nums[0] > nums[mid]  表示的是有增有减   位于两个数之间的才会处理 后半段 
+
+类似于双调函数 
+
+
+
+if ((nums[0] > target) ^ (nums[0] > nums[mid]) ^ (target > nums[mid]))
+    lo = mid + 1;
+else
+    hi = mid;
