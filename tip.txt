@@ -1,0 +1,18 @@
+这道题目一个简单的思路就是 列出四个旋转得到的像素，使用这几个像素进行赋值就可以，但是需要画图列出图像像素的变化
+
+一个简单的操作：
+
+先沿着主对角线 交换对应的像素 然后每一行交换
+for (int i=0;i<matrix.size();i++)
+        for (int j=0;j<i;j++)
+            swap (matrix[i][j],matrix [j][i]);
+        
+    for (int i=0;i<matrix.size();i++)
+        reverse(matrix[i].begin(), matrix[i].end());
+    }
+
+
+主要是有以下变化
+
+i,j   j,4-i   4-i,4-j     4-j,i
+
