@@ -1,0 +1,52 @@
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> head, tail, *pHead, *pTail;
+        unordered_set<string> word_set;
+        for(auto it = wordList.begin(); it != wordList.end(); ++it) {
+            word_set.insert(*it);
+        }
+        if(word_set.find(endWord) == word_set.end()){
+            return 0;
+        }
+        head.insert(beginWord);
+        tail.insert(endWord);
+        word_set.erase(beginWord);
+        word_set.erase(endWord);
+
+        int distance = 2;
+        while(!head.empty() && !tail.empty()) {
+            if(head.size() > tail.size()) {
+                pHead = &tail;
+                pTail = &head;
+            }else {
+                pHead = &head;
+                pTail = &tail;
+            }
+            
+            unordered_set<string> tmp;
+            for(auto it = pHead->begin(); it != pHead->end(); ++it ) {
+                string word = *it;
+                //word_set.erase(word);
+                for(int j = 0; j < word.length(); ++j) {
+                    char letter = word[j];
+                    for(int k = 0;k < 26; ++k) {
+                        word[j] = 'a' + k;
+                        if(pTail->find(word) != pTail->end()) {
+                            return distance;
+                        }
+                        if(word_set.find(word) != word_set.end()){
+                            tmp.insert(word);
+                            word_set.erase(word);
+                            
+                        }
+                    }
+                    word[j] = letter;
+                }
+            }
+            swap(*pHead,tmp);
+            ++distance;
+        }
+        return 0;
+    }
+};
